@@ -1,0 +1,76 @@
+import java.util.Scanner;
+
+public class SimpleUI implements UserInterface {
+    private BlackjackGame game;
+    private Scanner user = new Scanner(System.in);
+
+    @Override
+    public void setGame(BlackjackGame game) {
+        this.game = game;
+    }
+
+    @Override
+    public void display() {
+        System.out.println("\n--- Current Game State ---");
+
+        System.out.print("House's cards: ");
+        for (Card card : game.getHouseCards().getCards()) {
+            System.out.print(card + " ");
+        }
+        System.out.println();
+
+        System.out.print("Your cards: ");
+        for (Card card : game.getYourCards().getCards()) {
+            System.out.print(card + " ");
+        }
+        System.out.println();
+
+        System.out.println("Your score: " + game.score(game.getYourCards()));
+        if (game.getHouseCards().getCards().get(0).isFaceUp()) {
+            System.out.println("House score: " + game.score(game.getHouseCards()));
+        } else {
+            System.out.println("House score: ? (One card is face down)");
+        }
+    }
+
+    @Override
+    public boolean hitMe() {
+        System.out.print("Would you like to hit? (yes/no): ");
+        String response = user.nextLine().trim().toLowerCase();
+        return response.equals("yes");
+    }
+
+    @Override
+    public void gameOver() {
+        System.out.println("\n--- Game Over ---");
+
+        System.out.print("Final House's cards: ");
+        for (Card card : game.getHouseCards().getCards()) {
+            System.out.print(card + " ");
+        }
+        System.out.println();
+        
+        System.out.print("Final Your cards: ");
+        for (Card card : game.getYourCards().getCards()) {
+            System.out.print(card + " ");
+        }
+        System.out.println();
+
+        int yourScore = game.score(game.getYourCards());
+        int houseScore = game.score(game.getHouseCards());
+        System.out.println("Your final score: " + yourScore);
+        System.out.println("House's final score: " + houseScore);
+
+        if (yourScore > 21) {
+            System.out.println("You went over 21. You lose!");
+        } else if (houseScore > 21) {
+            System.out.println("The house went over 21. You win!");
+        } else if (yourScore > houseScore) {
+            System.out.println("You win!");
+        } else if (houseScore > yourScore) {
+            System.out.println("House wins!");
+        } else {
+            System.out.println("It's a tie!");
+        }
+    }
+}SIm

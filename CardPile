@@ -1,0 +1,81 @@
+/**
+ *
+ * @Saqlain Raza 
+ */
+import java.util.ArrayList;
+import java.util.Random;
+
+
+public class CardPile {
+   
+    private ArrayList<Card> cards;
+
+    
+    public CardPile() {
+        
+        cards = new ArrayList<>();
+    }
+
+    
+    public void add(Card card) {
+        
+        cards.add(card);
+    }
+
+   
+    public Card removeRandom() {
+        if (cards.isEmpty()) {
+            return null; 
+        }
+        Random rand = new Random();
+        int index = rand.nextInt(cards.size()); 
+        return cards.remove(index);  
+    }
+
+    
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        for (Card card : cards) {
+            result.append(card).append(" "); 
+        }
+        return result.toString().trim(); 
+    }
+
+   
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
+
+    
+    public static void main(String[] args) {
+        
+        CardPile p = new CardPile();
+        
+        
+        p.add(new Card(2, Card.DIAMOND, true));  
+        p.add(new Card(3, Card.HEART, true));    
+        p.add(new Card(4, Card.SPADE, false));   
+        p.add(new Card(14, Card.DIAMOND, true)); 
+
+        
+        System.out.println("Removed: " + p.removeRandom());
+        System.out.println("Removed: " + p.removeRandom());
+        System.out.println("Removed: " + p.removeRandom());
+        System.out.println("Removed: " + p.removeRandom());
+
+       
+        System.out.println("");
+        CardPile deck = new CardPile();
+        for (int i = 2; i < 15; i++) {  
+            for (int j = 0; j < 4; j++) {  
+                deck.add(new Card(i, j, true));  
+            }
+        }
+
+       
+        for (int i = 0; i < 52; i++) {  
+            System.out.println((i + 1) + ": " + deck.removeRandom());  
+        }
+    }
+}
